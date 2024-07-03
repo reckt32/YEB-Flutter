@@ -21,7 +21,7 @@ class _A2state extends State<A2> {
 
   Future<void> fetchUserData() async {
     final apiUrl =
-        'http://127.0.0.1:8000/users/user-info/'; // Replace with your actual API URL
+        'http://10.0.2.2:8000/users/user-info/'; // Replace with your actual API URL
     try {
       final response = await http.get(
         Uri.parse(apiUrl),

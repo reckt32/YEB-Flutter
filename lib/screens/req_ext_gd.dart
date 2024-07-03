@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:yeb_flutter/screens/a11.dart';
 import 'dart:convert';
+import 'package:yeb_flutter/services/test3.dart';
 
 import 'package:yeb_flutter/screens/gd_deny.dart';
-
+//saari details fetch karni hongi uske fuctions likho
 //saari details fetch karni hongi uske fuctions likho
 class GDExt extends StatefulWidget {
   const GDExt({super.key});
@@ -16,12 +17,15 @@ class GDExt extends StatefulWidget {
 class _GDExtState extends State<GDExt> {
   String? userId = '';
   String? username = '';
-  Future<void> sendPostRequest() async {
-    final url = Uri.parse('http://127.0.0.1/events/gd_request/');
-    final headers = {'Content-Type': 'application/json'};
+  Future<void> sendPostRequest(String reason) async {
+    final url = Uri.parse('http://10.0.2.2:8000/events/gd_request/');
+    final headers = {'Content-Type': 'application/json',
+      'Authorization':
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1OTExMDI3LCJpYXQiOjE3MTk5MTEwMjcsImp0aSI6ImFkYTE2ZGE3NDZkYTQ4M2I4NTJiNGRjODdiYzJlMGIyIiwidXNlcl9pZCI6Mn0.G86CMYcQJyK88CyoVALqGFyfiimaQF7E4e_ltAsQayI',
+    };
     final body = json.encode({
-      'reason': 'India ka match hai',
-      'gd_static_id': '6ec56dd3-b285-4ceb-bf92-3bc67436f81c',
+      'reason': reason,
+      'gd_static_id': '8e22f4b6-28e1-4d6a-a755-40b77594ebc1',
       'type': 'not_coming',
     });
 
@@ -36,13 +40,13 @@ class _GDExtState extends State<GDExt> {
 
   Future<void> fetchUserData() async {
     final apiUrl =
-        'http://127.0.0.1:8000/users/user-info/'; // Replace with your actual API URL
+        'http://10.0.2.2:8000/users/user-info/'; // Replace with your actual API URL
     try {
       final response = await http.get(
         Uri.parse(apiUrl),
         headers: <String, String>{
           'Authorization':
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1OTU5MDQ0LCJpYXQiOjE3MTk5NTkwNDQsImp0aSI6IjNhNjc4ZmJlMDlhZjRlN2U5ZTVjNzNjNjk1N2ZkZTcxIiwidXNlcl9pZCI6Mn0.bJ0NfEe4fYMc_iN-frhtqsKNvzQH2i8bIpewBung7RU',
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1OTExMDI3LCJpYXQiOjE3MTk5MTEwMjcsImp0aSI6ImFkYTE2ZGE3NDZkYTQ4M2I4NTJiNGRjODdiYzJlMGIyIiwidXNlcl9pZCI6Mn0.G86CMYcQJyK88CyoVALqGFyfiimaQF7E4e_ltAsQayI',
         },
       );
       if (response.statusCode == 200) {
@@ -74,7 +78,7 @@ class _GDExtState extends State<GDExt> {
           child: CircleAvatar(
             radius: 10.0,
             backgroundImage: AssetImage(
-                'assets/icons/google_logo.webp'), // Replace with your image asset
+                'assets/icons/google.png'), // Replace with your image asset
           ),
         ),
         title: Row(
@@ -102,7 +106,7 @@ class _GDExtState extends State<GDExt> {
             ),
             SizedBox(
                 width: MediaQuery.of(context).size.width * 0.2,
-                child: Image.asset('assets/icons/google_logo.webp')),
+                child: Image.asset('assets/icons/google.png')),
           ],
         ),
       ),
@@ -151,8 +155,14 @@ class _GDExtState extends State<GDExt> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  onPressed: () {
-                    sendPostRequest();
+                  onPressed: () async {
+                    String reason= textEditingController.text;
+                    await sendPostRequest(reason);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => (GDAcceptedScreen())),
+                    );
                   },
                   child: const Text('Submit',
                       style: const TextStyle(color: Colors.white))),
@@ -193,13 +203,13 @@ class _GDExtState extends State<GDExt> {
           // Handle navigation on tap
           switch (index) {
             case 0:
-              // Navigate to Home
+            // Navigate to Home
               break;
             case 1:
-              // Navigate to Settings
+            // Navigate to Settings
               break;
             case 2:
-              // Handle Logout
+            // Handle Logout
               break;
           }
         },
