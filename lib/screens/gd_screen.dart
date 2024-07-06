@@ -33,13 +33,13 @@ class _GDScreenState extends State<GDScreen> {
 
   Future<void> fetchUserData() async {
     final apiUrl =
-        'http://127.0.0.1:8000/users/user-info/'; // Replace with your actual API URL
+        'http://10.0.2.2:8000/users/user-info/'; // Replace with your actual API URL
     try {
       final response = await http.get(
         Uri.parse(apiUrl),
         headers: <String, String>{
           'Authorization':
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1OTU5MDQ0LCJpYXQiOjE3MTk5NTkwNDQsImp0aSI6IjNhNjc4ZmJlMDlhZjRlN2U5ZTVjNzNjNjk1N2ZkZTcxIiwidXNlcl9pZCI6Mn0.bJ0NfEe4fYMc_iN-frhtqsKNvzQH2i8bIpewBung7RU',
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1OTExMDI3LCJpYXQiOjE3MTk5MTEwMjcsImp0aSI6ImFkYTE2ZGE3NDZkYTQ4M2I4NTJiNGRjODdiYzJlMGIyIiwidXNlcl9pZCI6Mn0.G86CMYcQJyK88CyoVALqGFyfiimaQF7E4e_ltAsQayI',
         },
       );
       if (response.statusCode == 200) {
